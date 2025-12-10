@@ -1,74 +1,70 @@
 # laboRARE Engine
 
-a fastapi + next.js rag engine that combines mistral's ocr capabilities with natural language q&a for pdf documents.
+fastapi + next.js rag engine combining mistral's ocr with natural language q&a for pdf documents.
 
 ## Architecture
 
 ```
 laboRARE-engine/
-├── backend/              # fastapi backend
-│   ├── main.py          # api endpoints
-│   ├── schemas.py       # pydantic models
+├── backend/                      # fastapi api server
+│   ├── main.py                  # rest endpoints
+│   ├── schemas.py               # pydantic models
 │   └── services/
-│       └── mistral_service.py  # mistral api integration
-├── frontend/            # next.js frontend
-│   ├── app/            # next.js app router
-│   ├── components/     # react components
-│   └── lib/            # utilities and stores
-└── run_server.py       # backend entry point
+│       └── mistral_service.py   # mistral api client
+├── frontend/                     # next.js web app
+│   ├── app/                     # app router pages
+│   ├── components/              # react components
+│   └── lib/                     # utilities & state
+└── run_server.py                # server launcher
 ```
 
-**backend**: fastapi server that handles document upload, ocr processing, and q&a queries using mistral api.
+**backend** - fastapi server handling document upload, ocr processing, and q&a via mistral api
 
-**frontend**: next.js application with chat interface for document interaction.
+**frontend** - next.js chat interface for document interaction
 
 ## Setup
 
-1. **install dependencies**
+**1. install dependencies**
 
-backend:
 ```bash
+# backend
 pip install -r requirements.txt
-```
 
-frontend:
-```bash
+# frontend
 cd frontend
 npm install
 ```
 
-2. **environment variables**
+**2. configure environment**
 
-create `.env` in project root:
+rename `.env.sample` to `.env` and add your mistral api key:
+
 ```env
-MISTRAL_API_KEY=your_mistral_api_key_here
+MISTRAL_API_KEY=your_actual_api_key_here
 ```
 
-## How to run
+## Running
 
-### backend
+**backend**
 
 ```bash
 python run_server.py
 ```
+- server: `http://localhost:8000`
+- api docs: `http://localhost:8000/docs`
 
-server runs at `http://localhost:8000`
-
-api docs: `http://localhost:8000/docs`
-
-### frontend
+**frontend**
 
 ```bash
 cd frontend
 npm run dev
 ```
-
-app runs at `http://localhost:3000`
+- app: `http://localhost:3000`
 
 ## Features
 
-- upload pdf documents (max 50mb, 1000 pages)
+- pdf upload (max 50mb, 1000 pages)
 - ocr extraction with markdown output
-- natural language q&a with conversation history
+- conversational q&a with history
 - streaming responses
-- document management (list, delete)
+- document management
